@@ -210,13 +210,13 @@ let g:prettier#autoformat_require_pragma = 0
 " ====================== Ag ========================
 let g:ackprg = 'ag --vimgrep --smart-case' 
 
-" ================= NerdTree Highligh ===============
+" ================= NerdTree Highlight ===============
 
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
-let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
-let g:NERDTreePatternMatchHighlightFullName = 1
+" let g:NERDTreeExactMatchHighlightFullName = 1
+" let g:NERDTreeFileExtensionHighlightFullName = 1
+" let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+" let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+" let g:NERDTreePatternMatchHighlightFullName = 1
 
 "====================== COC ========================
 let g:coc_global_extensions = ['coc-tsserver']
