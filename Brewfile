@@ -14,14 +14,15 @@ brew "terraform"
 brew "the_silver_searcher"
 brew "tmux"
 brew "tree"
+brew "wget"
 cask "datagrip"
+cask "devtoys"
 cask "discord"
 cask "docker"
 cask "google-chrome"
 cask "intellij-idea"
 cask "iterm2"
 cask "kitty"
-cask "logitech-options"
 cask "notion"
 cask "openvpn-connect"
 cask "postman"
@@ -32,9 +33,3 @@ cask "visual-studio-code"
 cask "vlc"
 cask "whatsapp"
 cask "zoom"
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "RunCat", id: 1429033973
