@@ -8,6 +8,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'arthurxavierx/vim-caser'
 Plug 'ayu-theme/ayu-vim'
+Plug 'dag/vim-fish'
 Plug 'edkolev/tmuxline.vim'
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
