@@ -2,7 +2,6 @@ set -gxp PATH /opt/homebrew/bin $HOME/go/bin
 set -gx GOBIN $HOME/go/bin
 set -gx EDITOR nvim
 
-set -g nvm_prefix /opt/homebrew/opt/nvm
 set -g fish_color_option "E6B450"
 set -g fish_color_param  "5FD700" 
 
