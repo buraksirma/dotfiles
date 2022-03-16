@@ -1,12 +1,9 @@
-# INSTALL
-# cp tmuxconf ~/.tmux.conf
-#
 # Set prefix key to c-f instead of default c-b
 unbind C-b
 set -g prefix C-f
 bind C-f send-prefix
 
-set-environment -g PATH "/opt/homebrew/bin:/usr/local/bin:/bin:/usr/bin"
+set-environment -g PATH "/usr/local/bin:/bin:/usr/bin:/usr/sbin:/sbin"
 
 set-option -g default-shell /opt/homebrew/bin/fish 
 
