@@ -1,5 +1,6 @@
 set encoding=UTF-8
 
+lua require("impatient")
 lua require("plugins")
 
 "=====================================================
@@ -94,20 +95,6 @@ augroup END
 
 set termguicolors
 colorscheme ayu-dark
-
-"=====================================================
-"==================== STATUSLINE =====================
-
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '%a',
-      \'y'    : '%Y-%m-%d %H:%M',
-      \'z'    : ' #h',
-      \'options' : {'status-justify' : 'left', 'status-position' : 'top'}}
-
-let g:tmuxline_powerline_separators = 0
 
 "=====================================================
 "===================== MAPPINGS ======================

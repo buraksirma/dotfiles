@@ -1,68 +1,4 @@
-require'impatient'
-
-local g = vim.g
-g.dashboard_session_directory = '~/.config/nvim/.sessions'
-g.dashboard_default_executive ='telescope'
-g.dashboard_custom_section = {
-    a = {description = {"  Find File                 Ctrl   P  "}, command = "Telescope find_files"},
-    b = {description = {"  Recents                   leader f h"}, command = "Telescope oldfiles"},
-    c = {description = {"  Find Word                 Ctrl   G  "}, command = "Telescope live_grep"},
-    d = {description = {"  New File                  leader e n"}, command = "DashboardNewFile"},
-    e = {description = {"  Bookmarks                 leader m  "}, command = "Telescope marks"},
-    f = {description = {"  Load Last Session         leader l  "}, command = "SessionLoad"},
-    g = {description = {"  Update Plugins            leader u  "}, command = "PackerUpdate"},
-    h = {description = {"  Settings                  leader e v"}, command = "edit $MYVIMRC"},
-    i = {description = {"  Exit                      leader q  "}, command = "exit"}
-}
-
-g.dashboard_custom_footer = {'Call me Juggernaut!'}
-vim.cmd [[
-augroup dashboard_au
-     autocmd! * <buffer>
-     autocmd User dashboardReady let &l:stl = 'Dashboard'
-     autocmd User dashboardReady nnoremap <buffer> <leader>q <cmd>exit<CR>
-     autocmd User dashboardReady nnoremap <buffer> <leader>u <cmd>PackerUpdate<CR>
-     autocmd User dashboardReady nnoremap <buffer> <leader>l <cmd>SessionLoad<CR>
-augroup END
-]]
-
-g.dashboard_custom_header = {
-       "            :h-                                  Nhy`               ",
-       "           -mh.                           h.    `Ndho               ",
-       "           hmh+                          oNm.   oNdhh               ",
-       "          `Nmhd`                        /NNmd  /NNhhd               ",
-       "          -NNhhy                      `hMNmmm`+NNdhhh               ",
-       "          .NNmhhs              ```....`..-:/./mNdhhh+               ",
-       "           mNNdhhh-     `.-::///+++////++//:--.`-/sd`               ",
-       "           oNNNdhhdo..://++//++++++/+++//++///++/-.`                ",
-       "      y.   `mNNNmhhhdy+/++++//+/////++//+++///++////-` `/oos:       ",
-       " .    Nmy:  :NNNNmhhhhdy+/++/+++///:.....--:////+++///:.`:s+        ",
-       " h-   dNmNmy oNNNNNdhhhhy:/+/+++/-         ---:/+++//++//.`         ",
-       " hd+` -NNNy`./dNNNNNhhhh+-://///    -+oo:`  ::-:+////++///:`        ",
-       " /Nmhs+oss-:++/dNNNmhho:--::///    /mmmmmo  ../-///++///////.       ",
-       "  oNNdhhhhhhhs//osso/:---:::///    /yyyyso  ..o+-//////////:/.      ",
-       "   /mNNNmdhhhh/://+///::://////     -:::- ..+sy+:////////::/:/.     ",
-       "     /hNNNdhhs--:/+++////++/////.      ..-/yhhs-/////////::/::/`    ",
-       "       .ooo+/-::::/+///////++++//-/ossyyhhhhs/:///////:::/::::/:    ",
-       "       -///:::::::////++///+++/////:/+ooo+/::///////.::://::---+`   ",
-       "       /////+//++++/////+////-..//////////::-:::--`.:///:---:::/:   ",
-       "       //+++//++++++////+++///::--                 .::::-------::   ",
-       "       :/++++///////////++++//////.                -:/:----::../-   ",
-       "       -/++++//++///+//////////////               .::::---:::-.+`   ",
-       "       `////////////////////////////:.            --::-----...-/    ",
-       "        -///://////////////////////::::-..      :-:-:-..-::.`.+`    ",
-       "         :/://///:///::://::://::::::/:::::::-:---::-.-....``/- -   ",
-       "           ::::://::://::::::::::::::----------..-:....`.../- -+oo/ ",
-       "            -/:::-:::::---://:-::-::::----::---.-.......`-/.      ``",
-       "           s-`::--:::------:////----:---.-:::...-.....`./:          ",
-       "          yMNy.`::-.--::..-dmmhhhs-..-.-.......`.....-/:`           ",
-       "         oMNNNh. `-::--...:NNNdhhh/.--.`..``.......:/-              ",
-       "        :dy+:`      .-::-..NNNhhd+``..`...````.-::-`                ",
-       "                        .-:mNdhh:.......--::::-`                    ",
-       "                           yNh/..------..`                          ",
-       "                                                                    ",
-       "                              N E O V I M                           ",
-       }
+require'dashboard'.setup()
 
 require'lualine'.setup({
   options = {
@@ -97,24 +33,6 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
-end
-
--- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- Enable the following language servers
-local nvim_lsp = require 'lspconfig'
-local servers = { 'tsserver' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
 end
 
 -- CMP
@@ -189,6 +107,24 @@ cmp.setup({
         { name = 'ultisnips' },
     },
 })
+
+-- nvim-cmp supports additional completion capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+-- Enable the following language servers
+local nvim_lsp = require 'lspconfig'
+local servers = { 'tsserver' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      -- This will be the default in neovim 0.7+
+      debounce_text_changes = 150,
+    }
+  }
+end
 
 
 -- TREE Sitter - Language servers
