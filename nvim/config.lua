@@ -1,5 +1,6 @@
 require'dashboard'.setup()
 
+require'gitsigns'.setup()
 require'lualine'.setup({
   options = {
     theme = 'ayu',
