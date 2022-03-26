@@ -39,7 +39,7 @@ set showcmd                     " Show me what I'm typing
 set smartcase                   " ... but not it begins with upper case 
 set splitbelow                  " Split horizontal windows below to the current windows
 set splitright                  " Split vertical windows right to the current windows
-set updatetime=300
+set updatetime=300 
 
 set clipboard^=unnamed
 set clipboard^=unnamedplus
@@ -62,13 +62,13 @@ endif
 augroup filetypedetect
   command! -nargs=* -complete=help Help vertical belowright help <args>
   autocmd FileType help wincmd L
-  
+
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
   autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
   autocmd BufNewFile,BufRead *.hcl setf conf
 
   autocmd BufRead,BufNewFile *.gotmpl set filetype=gotexttmpl
-  
+
   autocmd BufNewFile,BufRead *.ino setlocal noet ts=4 sw=4 sts=4
   autocmd BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
   autocmd BufNewFile,BufRead *.md setlocal noet ts=4 sw=4
@@ -78,11 +78,14 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.sh setlocal expandtab shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.proto setlocal expandtab shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.fish setlocal expandtab shiftwidth=2 tabstop=2
-  
+
   autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
   autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
-  autocmd FileType javascript setlocal expandtab shiftwidth=4 tabstop=4
+  autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType javascriptreact setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType typescriptreact setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType lua setlocal expandtab shiftwidth=4 tabstop=4
   autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 
@@ -95,6 +98,10 @@ augroup END
 
 set termguicolors
 colorscheme ayu-dark
+
+" Show comments as italic
+" Disabled because of problems with tmux-256color for now
+" highlight Comment cterm=italic gui=italic
 
 "=====================================================
 "===================== MAPPINGS ======================
@@ -115,6 +122,8 @@ nnoremap N Nzzzv
 
 noremap <C-d> <C-d>zz
 noremap <C-u> <C-u>zz
+
+nnoremap <silent> <c-x> <c-^>
 
 "=====================================================
 "===================== CONFIGS =======================
@@ -142,5 +151,19 @@ vmap gx <Plug>(openbrowser-smart-search)
 "===================== Telescope ========================
 nnoremap <C-P> <cmd>Telescope find_files<cr>
 nnoremap <C-G> <cmd>Telescope live_grep<cr>
+
+"===================== BufferLine ======================
+nnoremap <silent><leader>1 <Cmd>BufferLineGoToBuffer 1<CR>
+nnoremap <silent><leader>2 <Cmd>BufferLineGoToBuffer 2<CR>
+nnoremap <silent><leader>3 <Cmd>BufferLineGoToBuffer 3<CR>
+nnoremap <silent><leader>4 <Cmd>BufferLineGoToBuffer 4<CR>
+nnoremap <silent><leader>5 <Cmd>BufferLineGoToBuffer 5<CR>
+nnoremap <silent><leader>6 <Cmd>BufferLineGoToBuffer 6<CR>
+nnoremap <silent><leader>7 <Cmd>BufferLineGoToBuffer 7<CR>
+nnoremap <silent><leader>8 <Cmd>BufferLineGoToBuffer 8<CR>
+nnoremap <silent><leader>9 <Cmd>BufferLineGoToBuffer 9<CR>
+
+nnoremap <silent>[b :BufferLineCycleNext<CR>
+nnoremap <silent>]b :BufferLineCyclePrev<CR>
 
 lua require("config")

@@ -1,13 +1,23 @@
+local hlGroups = {
+    String      = 'String',
+    Identifier  = 'Identifier',
+    Keyword     = 'Keyword',
+    Number      = 'Number',
+    Constant    = 'Constant',
+    AlphaFooter = 'AlphaFooter',
+    Typedef     = 'Typedef',
+}
+
 local dash = {}
 dash.setup = function()
     local alpha = require("alpha")
     local dashboard = require("alpha.themes.dashboard")
 
     local function button(sc, txt, keybind, keybind_opts)
-      local b = dashboard.button(sc, txt, keybind, keybind_opts)
-      b.opts.hl = 'String'
-      b.opts.hl_shortcut = 'Keyword'
-      return b
+        local b = dashboard.button(sc, txt, keybind, keybind_opts)
+        b.opts.hl = hlGroups.Identifier
+        b.opts.hl_shortcut = hlGroups.Identifier
+        return b
     end
 
     dashboard.section.buttons.val = {
@@ -25,44 +35,60 @@ dash.setup = function()
         "",
         "",
         "",
-        "",
-        "",
-        "⡏⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠉⠉⠉⠹",
-        "⡇⢸⣿⡟⠛⢿⣷⠀⢸⣿⡟⠛⢿⣷⡄⢸⣿⡇⠀⢸⣿⡇⢸⣿⡇⠀⢸⣿⡇⠀",
-        "⡇⢸⣿⣧⣤⣾⠿⠀⢸⣿⣇⣀⣸⡿⠃⢸⣿⡇⠀⢸⣿⡇⢸⣿⣇⣀⣸⣿⡇⠀",
-        "⡇⢸⣿⡏⠉⢹⣿⡆⢸⣿⡟⠛⢻⣷⡄⢸⣿⡇⠀⢸⣿⡇⢸⣿⡏⠉⢹⣿⡇⠀",
-        "⡇⢸⣿⣧⣤⣼⡿⠃⢸⣿⡇⠀⢸⣿⡇⠸⣿⣧⣤⣼⡿⠁⢸⣿⡇⠀⢸⣿⡇⠀",
-        "⣇⣀⣀⣀⣀⣀⣀⣄⣀⣀⣀⣀⣀⣀⣀⣠⣀⡈⠉⣁⣀⣄⣀⣀⣀⣠⣀⣀⣀⣰",
-        "⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷",
-        "⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇",
-        "⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽",
-        "⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕",
-        "⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕",
-        "⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕",
-        "⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄",
-        "⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕",
-        "⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿",
-        "⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿",
-        "⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟",
-        "⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠",
-        "⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙",
-        "⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣",
-        "          N E O V I M         ",
-           }
+        "            :h-                                  Nhy`               ",
+        "           -mh.                           h.    `Ndho               ",
+        "           hmh+                          oNm.   oNdhh               ",
+        "          `Nmhd`                        /NNmd  /NNhhd               ",
+        "          -NNhhy                      `hMNmmm`+NNdhhh               ",
+        "          .NNmhhs              ```....`..-:/./mNdhhh+               ",
+        "           mNNdhhh-     `.-::///+++////++//:--.`-/sd`               ",
+        "           oNNNdhhdo..://++//++++++/+++//++///++/-.`                ",
+        "      y.   `mNNNmhhhdy+/++++//+/////++//+++///++////-` `/oos:       ",
+        " .    Nmy:  :NNNNmhhhhdy+/++/+++///:.....--:////+++///:.`:s+        ",
+        " h-   dNmNmy oNNNNNdhhhhy:/+/+++/-         ---:/+++//++//.`         ",
+        " hd+` -NNNy`./dNNNNNhhhh+-://///    -+oo:`  ::-:+////++///:`        ",
+        " /Nmhs+oss-:++/dNNNmhho:--::///    /mmmmmo  ../-///++///////.       ",
+        "  oNNdhhhhhhhs//osso/:---:::///    /yyyyso  ..o+-//////////:/.      ",
+        "   /mNNNmdhhhh/://+///::://////     -:::- ..+sy+:////////::/:/.     ",
+        "     /hNNNdhhs--:/+++////++/////.      ..-/yhhs-/////////::/::/`    ",
+        "       .ooo+/-::::/+///////++++//-/ossyyhhhhs/:///////:::/::::/:    ",
+        "       -///:::::::////++///+++/////:/+ooo+/::///////.::://::---+`   ",
+        "       /////+//++++/////+////-..//////////::-:::--`.:///:---:::/:   ",
+        "       //+++//++++++////+++///::--                 .::::-------::   ",
+        "       :/++++///////////++++//////.                -:/:----::../-   ",
+        "       -/++++//++///+//////////////               .::::---:::-.+`   ",
+        "       `////////////////////////////:.            --::-----...-/    ",
+        "        -///://////////////////////::::-..      :-:-:-..-::.`.+`    ",
+        "         :/://///:///::://::://::::::/:::::::-:---::-.-....``/- -   ",
+        "           ::::://::://::::::::::::::----------..-:....`.../- -+oo/ ",
+        "            -/:::-:::::---://:-::-::::----::---.-.......`-/.      ``",
+        "           s-`::--:::------:////----:---.-:::...-.....`./:          ",
+        "          yMNy.`::-.--::..-dmmhhhs-..-.-.......`.....-/:`           ",
+        "         oMNNNh. `-::--...:NNNdhhh/.--.`..``.......:/-              ",
+        "        :dy+:`      .-::-..NNNhhd+``..`...````.-::-`                ",
+        "                        .-:mNdhh:.......--::::-`                    ",
+        "                           yNh/..------..`                          ",
+        "                                                                    ",
+        "                              N E O V I M                           ",
+    }
 
     dashboard.section.footer.val = { 
-        '@buraksirma',
+        "",
+        "But in the end, it doesn't even matter",
     }
-    -- local colors = {"String", "Identifier", "Keyword", "Number", "Constant"}
 
-    dashboard.section.header.opts.hl = 'Identifier'
-    dashboard.section.footer.opts.hl = "Identifier"
+    dashboard.section.header.opts.hl = hlGroups.Keyword
+    dashboard.section.footer.opts.hl = hlGroups.Keyword
 
     alpha.setup(dashboard.opts)
 
-    vim.cmd([[
-        autocmd FileType alpha setlocal nofoldenable
-    ]])
+    -- dashboard.section.footer.opts.hl = hlGroups.AlphaFooter
+    -- local attrsOfIdentifier    = vim.fn.hlID(hlGroups.Keyword)
+    -- local transIdentifier      = vim.fn.synIDtrans(attrsOfIdentifier)
+    -- local hexColorOfIdentifier = vim.fn.synIDattr(transIdentifier, "fg#")
+
+    -- vim.cmd('highlight '.. hlGroups.AlphaFooter .. ' cterm=italic gui=italic guifg=' .. hexColorOfIdentifier)
+    vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
 end
 
 return dash
