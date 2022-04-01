@@ -154,7 +154,7 @@ capabilities       = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
 local nvim_lsp = require 'lspconfig'
-local servers  = { 'tsserver' }
+local servers  = { 'tsserver', 'jsonls' }
 
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {

@@ -3,7 +3,6 @@ return require('packer').startup(function()
     use 'Shatur/neovim-ayu'
     use 'SirVer/ultisnips'
     use 'akinsho/bufferline.nvim'
-    use 'dag/vim-fish'
     use 'feline-nvim/feline.nvim'
     use 'folke/trouble.nvim'
     use 'godlygeek/tabular'
