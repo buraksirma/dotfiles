@@ -4,7 +4,7 @@ require'dashboard'        .setup {}
 require'gitsigns'         .setup {}
 require'lspsaga'          .setup {}
 require'nvim-autopairs'   .setup {}
-require'nvim-tree'        .setup { auto_close = true }
+require'nvim-tree'        .setup {}
 require'trouble'          .setup {}
 require'indent_blankline' .setup {
     show_current_context = true,
@@ -70,18 +70,14 @@ local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
-    -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
-    -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
     vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
 -- CMP
 local cmp     = require'cmp'
 local lspkind = require'lspkind'
-
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
 
 cmp.setup({
     window = {
@@ -154,7 +150,7 @@ capabilities       = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
 local nvim_lsp = require 'lspconfig'
-local servers  = { 'tsserver', 'jsonls' }
+local servers  = { 'tsserver', 'jsonls', 'sumneko_lua' }
 
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
@@ -204,3 +200,6 @@ for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- NvimTree autoclose
+vim.cmd [[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]]

@@ -30,7 +30,7 @@ line.setup = function()
             show_tab_indicators = true,
             persist_buffer_sort = true,
             separator_style = "thick",
-            enforce_regular_tabs = false,
+            enforce_regular_tabs = true,
             always_show_bufferline = true,
         }
     }

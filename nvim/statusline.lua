@@ -299,7 +299,6 @@ table.insert(components.active[3], comps.vi_mode.right)
   end
 }) ]]
 
--- require'feline'.setup {}
 require'feline'.setup {
     colors = { bg = colors.bg, fg = colors.fg },
     components = components,
