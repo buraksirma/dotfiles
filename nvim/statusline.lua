@@ -2,6 +2,9 @@ if not pcall(require, "feline") then
   return
 end
 
+-- Global statusline
+vim.opt.laststatus = 3
+
 local colors = {
     bg = '#282c34',
     fg = '#abb2bf',

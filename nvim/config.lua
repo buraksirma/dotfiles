@@ -81,14 +81,8 @@ local lspkind = require'lspkind'
 
 cmp.setup({
     window = {
-        completion = {
-            border = 'rounded',
-            scrollbar = '║',
-        },
-        documentation = {
-            border = 'rounded',
-            scrollbar = '║',
-        },
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
     },
     formatting = {
         format = lspkind.cmp_format({
