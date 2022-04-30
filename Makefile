@@ -7,7 +7,8 @@ sync:
 	mkdir -p ~/.config/nvim/lua
 	mkdir -p ~/.tmux/
 
-	[ -f ~/.config/fish/config.fish ] || ln -s $(PWD)/config.fish ~/.config/fish/config.fish
+	[ -f ~/.config/fish/config.fish ] || ln -s $(PWD)/fish/config.fish ~/.config/fish/config.fish
+	[ -f ~/.config/fish/fish_plugins ] || ln -s $(PWD)/fish/fish_plugins ~/.config/fish/fish_plugins
 	[ -f ~/.config/kitty/ayu-dark.conf ] || ln -s $(PWD)/kitty/ayu-dark.conf ~/.config/kitty/ayu-dark.conf
 	[ -f ~/.config/kitty/kitty.conf ] || ln -s $(PWD)/kitty/kitty.conf ~/.config/kitty/kitty.conf
 	[ -f ~/.config/nvim/init.vim ] || ln -s $(PWD)/nvim/init.vim ~/.config/nvim/init.vim
@@ -22,6 +23,7 @@ sync:
 
 clean:
 	rm -f ~/.config/fish/config.fish
+	rm -f ~/.config/fish/fish_plugins
 	rm -f ~/.config/kitty/ayu-dark.conf
 	rm -f ~/.config/kitty/kitty.conf
 	rm -f ~/.config/nvim/init.vim

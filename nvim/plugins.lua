@@ -12,6 +12,7 @@ return require('packer').startup(function()
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-path'
+    use 'hrsh7th/nvim-cmp'
     use 'kyazdani42/nvim-tree.lua'
     use 'kyazdani42/nvim-web-devicons'
     use 'lewis6991/gitsigns.nvim'
@@ -30,7 +31,6 @@ return require('packer').startup(function()
     use 'windwp/nvim-autopairs'
     use 'windwp/nvim-ts-autotag'
     use 'xiyaowong/nvim-transparent'
-    use { 'hrsh7th/nvim-cmp' }
     use { 'nvim-telescope/telescope.nvim', requires = {'nvim-lua/plenary.nvim'} }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --production' }
