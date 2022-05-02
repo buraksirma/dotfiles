@@ -1,4 +1,5 @@
-set -gxp PATH /opt/homebrew/bin
+set -gxp PATH /opt/homebrew/bin $HOME/go/bin
+set -gx GOBIN $HOME/go/bin
 set -gx EDITOR nvim
 
 set -g fish_color_option "E6B450"
