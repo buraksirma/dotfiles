@@ -1,6 +1,6 @@
-require'buffline'         .setup {}
+require'buffline'         .setup ()
 require'statusline'
-require'dashboard'        .setup {}
+require'dashboard'        .setup ()
 require'gitsigns'         .setup {}
 require'lspsaga'          .setup {}
 require'nvim-autopairs'   .setup {}
@@ -30,6 +30,26 @@ require'telescope'.setup {
             "--smart-case",
             "--hidden"
         },
+    }
+}
+require'neorg'.setup {
+    load = {
+        ["core.defaults"] = {},
+        ["core.norg.dirman"] = {
+            config = {
+                workspaces = {
+                    work = "~/notes/work",
+                    home = "~/notes/home",
+                }
+            }
+        },
+        ["core.integrations.nvim-cmp"] = {},
+        ["core.norg.journal"] = {},
+        ["core.norg.concealer"] = {
+            config = {
+                icon_preset = "basic" -- basic | varied | diamond
+            }
+        }
     }
 }
 
@@ -144,19 +164,38 @@ capabilities       = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
 local nvim_lsp = require 'lspconfig'
-local servers  = { 'tsserver', 'jsonls', 'sumneko_lua' }
+local servers  = { 'tsserver', 'jsonls', 'sumneko_lua', 'gopls' }
 
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
+    local lsp_settings = {
         on_attach = on_attach,
         capabilities = capabilities,
-        flags = {
-            -- This will be the default in neovim 0.7+
-            debounce_text_changes = 150,
-        }
     }
+    if lsp == "sumneko_lua" then
+        local runtime_path = vim.split(package.path, ';')
+        table.insert(runtime_path, "lua/?.lua")
+        table.insert(runtime_path, "lua/?/init.lua")
+        lsp_settings['settings'] = {
+            Lua = {
+                runtime = {
+                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                    version = 'LuaJIT',
+                    -- Setup your lua path
+                    path = runtime_path,
+                },
+                diagnostics = {
+                    -- Get the language server to recognize the `vim` global
+                    globals = {'vim'},
+                },
+                workspace = {
+                    -- Make the server aware of Neovim runtime files
+                    library = vim.api.nvim_get_runtime_file("", true),
+                }
+            }
+        }
+    end
+    nvim_lsp[lsp].setup(lsp_settings)
 end
-
 
 -- TREE Sitter - Language servers
 require'nvim-treesitter.configs'.setup {
@@ -165,11 +204,9 @@ require'nvim-treesitter.configs'.setup {
     },
     highlight = {
         enable = true,
-        disable = {},
     },
     indent = {
         enable = false,
-        disable = {},
     },
     ensure_installed = {
         "tsx",
@@ -178,13 +215,16 @@ require'nvim-treesitter.configs'.setup {
         "json",
         "yaml",
         "html",
-        "scss"
+        "scss",
+        "go",
+        "gomod",
+        "norg"
     },
 }
 -- Diagnostics
 vim.cmd [[autocmd! CursorHold,CursorHoldI * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()]]
 
-vim.diagnostic.config { 
+vim.diagnostic.config {
     virtual_text = { prefix = '●' },
     update_in_insert = false,
 }
@@ -197,3 +237,21 @@ end
 
 -- NvimTree autoclose
 vim.cmd [[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]]
+
+-- Go related stuff
+function OrgImports(wait_ms)
+    local params = vim.lsp.util.make_range_params()
+    params.context = {only = {"source.organizeImports"}}
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+    for _, res in pairs(result or {}) do
+        for _, r in pairs(res.result or {}) do
+            if r.edit then
+                vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+            else
+                vim.lsp.buf.execute_command(r.command)
+            end
+        end
+    end
+end
+
+vim.cmd [[autocmd BufWritePre *.go lua OrgImports(1000)]]

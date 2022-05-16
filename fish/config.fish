@@ -4,6 +4,7 @@ set -gx EDITOR nvim
 
 set -g fish_color_option "E6B450"
 set -g fish_color_param  "5FD700" 
+set -g fzf_fd_opts --hidden --exclude=.git
 
 alias vim "nvim"
 alias ls "exa"

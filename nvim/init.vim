@@ -88,6 +88,7 @@ augroup filetypedetect
   autocmd FileType typescriptreact setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType lua setlocal expandtab shiftwidth=4 tabstop=4
   autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType norg setlocal expandtab shiftwidth=2 tabstop=2
 
   autocmd FileType javascript UltiSnipsAddFiletypes javascript, javascript-node
 augroup END
@@ -123,7 +124,7 @@ nnoremap N Nzzzv
 noremap <C-d> <C-d>zz
 noremap <C-u> <C-u>zz
 
-nnoremap <silent> <c-x> <c-^>
+nnoremap <silent> <c-6> <c-^>
 
 "=====================================================
 "===================== CONFIGS =======================
@@ -140,8 +141,8 @@ let g:prettier#autoformat_require_pragma = 0
 
 
 "====================== Fugitive ========================
-vnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gb :Gblame<CR>
+vnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gb :Git blame<CR>
 
 "===================== open-browser =====================
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
