@@ -21,6 +21,7 @@ return require('packer').startup(function()
     use 'nvim-lua/plenary.nvim'
     use 'nvim-neorg/neorg'
     use 'nvim-telescope/telescope.nvim'
+    use 'mhartington/formatter.nvim'
     use 'onsails/lspkind-nvim'
     use 'quangnguyen30192/cmp-nvim-ultisnips'
     use 'roxma/vim-tmux-clipboard'
@@ -34,6 +35,5 @@ return require('packer').startup(function()
     use 'windwp/nvim-autopairs'
     use 'windwp/nvim-ts-autotag'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --production' }
     use { 'tmux-plugins/vim-tmux', ft = 'tmux' }
 end)

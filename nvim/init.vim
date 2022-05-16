@@ -134,12 +134,6 @@ nnoremap <silent> <c-6> <c-^>
 noremap <Leader>f :NvimTreeFindFile<cr>
 noremap <Leader>n :NvimTreeToggle<cr>
 
-
-" =================== Prettier ======================
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_require_pragma = 0
-
-
 "====================== Fugitive ========================
 vnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gb :Git blame<CR>
@@ -168,3 +162,9 @@ nnoremap <silent>[b :BufferLineCycleNext<CR>
 nnoremap <silent>]b :BufferLineCyclePrev<CR>
 
 lua require("config")
+
+"===================== Formatter.nvim ======================
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost * FormatWrite
+augroup END
