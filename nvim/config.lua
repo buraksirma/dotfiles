@@ -1,10 +1,10 @@
 require("buffline").setup()
-require("statusline")
 require("dashboard").setup()
 require("gitsigns").setup({})
 require("lspsaga").setup({})
 require("nvim-autopairs").setup({})
 require("nvim-tree").setup({})
+require("statusline")
 require("trouble").setup({})
 require("indent_blankline").setup({
 	show_current_context = true,
@@ -215,6 +215,8 @@ require("nvim-treesitter.configs").setup({
 		enable = false,
 	},
 	ensure_installed = {
+		"javascript",
+		"typescript",
 		"tsx",
 		"toml",
 		"fish",
@@ -222,6 +224,7 @@ require("nvim-treesitter.configs").setup({
 		"yaml",
 		"html",
 		"scss",
+		"css",
 		"go",
 		"gomod",
 		"norg",
@@ -263,10 +266,33 @@ require("formatter").setup({
 		},
 		go = {
 			require("formatter.filetypes.go").gofumpt,
-			require("formatter.filetypes.go").goimports,
 		},
 		json = {
 			require("formatter.filetypes.json").prettierd,
 		},
+		html = {
+			require("formatter.filetypes.html").prettierd,
+		},
+		css = {
+			require("formatter.filetypes.css").prettierd,
+		},
 	},
 })
+
+-- Go format imports via lsp instead of using goimports
+function OrgImports(wait_ms)
+	local params = vim.lsp.util.make_range_params()
+	params.context = { only = { "source.organizeImports" } }
+	local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+	for _, res in pairs(result or {}) do
+		for _, r in pairs(res.result or {}) do
+			if r.edit then
+				vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+			else
+				vim.lsp.buf.execute_command(r.command)
+			end
+		end
+	end
+end
+
+vim.cmd([[autocmd BufWritePre *.go lua OrgImports(1000)]])
