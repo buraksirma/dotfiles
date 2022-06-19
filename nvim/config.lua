@@ -170,7 +170,7 @@ capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Enable the following language servers
 local nvim_lsp = require("lspconfig")
-local servers = { "tsserver", "jsonls", "sumneko_lua", "gopls" }
+local servers = { "tsserver", "jsonls", "sumneko_lua", "gopls", "rust_analyzer" }
 
 for _, lsp in ipairs(servers) do
 	local lsp_settings = {
@@ -228,6 +228,7 @@ require("nvim-treesitter.configs").setup({
 		"go",
 		"gomod",
 		"norg",
+		"rust",
 	},
 })
 -- Diagnostics
@@ -275,6 +276,9 @@ require("formatter").setup({
 		},
 		css = {
 			require("formatter.filetypes.css").prettierd,
+		},
+		rust = {
+			require("formatter.filetypes.rust").rustfmt,
 		},
 	},
 })

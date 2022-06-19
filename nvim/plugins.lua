@@ -1,4 +1,4 @@
-return require("packer").startup(function()
+return require("packer").startup(function(use)
 	use("lukas-reineke/indent-blankline.nvim")
 	use("Shatur/neovim-ayu")
 	use("SirVer/ultisnips")

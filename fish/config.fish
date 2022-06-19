@@ -1,4 +1,4 @@
-set -gxp PATH /opt/homebrew/bin $HOME/go/bin
+set -gxp PATH /opt/homebrew/bin $HOME/go/bin $HOME/.cargo/bin
 set -gx GOBIN $HOME/go/bin
 set -gx EDITOR nvim
 
@@ -14,3 +14,6 @@ set fish_greeting ""
 
 # brew install jump, https://github.com/gsamokovarov/jump
 status --is-interactive; and source (jump shell fish | psub)
+
+# brew install fnm, https://github.com/Schniz/fnm
+status --is-interactive; and source (fnm env --use-on-cd | psub)
