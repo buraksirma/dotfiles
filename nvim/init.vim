@@ -90,6 +90,7 @@ augroup filetypedetect
   autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType norg setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType svelte setlocal expandtab shiftwidth=2 tabstop=2
+  autocmd FileType terraform setlocal expandtab shiftwidth=2 tabstop=2
 
   autocmd FileType javascript UltiSnipsAddFiletypes javascript, javascript-node
 augroup END
@@ -141,8 +142,8 @@ nnoremap <leader>gb :Git blame<CR>
 
 "===================== open-browser =====================
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
+nmap gm <Plug>(openbrowser-smart-search)
+vmap gm <Plug>(openbrowser-smart-search)
 
 "===================== Telescope ========================
 nnoremap <C-P> <cmd>Telescope find_files<cr>

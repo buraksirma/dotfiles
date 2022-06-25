@@ -5,7 +5,11 @@ require("lspsaga").setup({})
 require("nvim-autopairs").setup({})
 require("nvim-tree").setup({})
 require("statusline")
-require("trouble").setup({})
+require("bufjump").setup({
+	forward = "<M-i>",
+	backward = "<M-o>",
+	on_success = nil,
+})
 require("indent_blankline").setup({
 	show_current_context = true,
 	show_current_context_start = false,
@@ -37,6 +41,7 @@ require("telescope").setup({
 		},
 	},
 })
+require("telescope").load_extension("fzf")
 require("neorg").setup({
 	load = {
 		["core.defaults"] = {},
@@ -87,6 +92,7 @@ local on_attach = function(_, bufnr)
 	setKey(bufnr, "n", "gd", '<cmd>lua require "telescope.builtin".lsp_definitions()<CR>', opts)
 	setKey(bufnr, "n", "gi", '<cmd>lua require "telescope.builtin".lsp_implementations()<CR>', opts)
 	setKey(bufnr, "n", "gr", '<cmd>lua require "telescope.builtin".lsp_references()<CR>', opts)
+	setKey(bufnr, "n", "ge", '<cmd>lua require "telescope.builtin".diagnostics()<CR>', opts)
 
 	-- LSP SAGA HOTKEYS
 	setKey(bufnr, "n", "<leader>rn", "<cmd>Lspsaga rename<cr>", opts)
@@ -170,7 +176,7 @@ capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Enable the following language servers
 local nvim_lsp = require("lspconfig")
-local servers = { "tsserver", "jsonls", "sumneko_lua", "gopls", "rust_analyzer" }
+local servers = { "tsserver", "jsonls", "sumneko_lua", "gopls", "rust_analyzer", "terraformls" }
 
 for _, lsp in ipairs(servers) do
 	local lsp_settings = {
@@ -215,20 +221,21 @@ require("nvim-treesitter.configs").setup({
 		enable = false,
 	},
 	ensure_installed = {
-		"javascript",
-		"typescript",
-		"tsx",
-		"toml",
-		"fish",
-		"json",
-		"yaml",
-		"html",
-		"scss",
 		"css",
+		"fish",
 		"go",
 		"gomod",
+		"hcl",
+		"html",
+		"javascript",
+		"json",
 		"norg",
 		"rust",
+		"scss",
+		"toml",
+		"tsx",
+		"typescript",
+		"yaml",
 	},
 })
 -- Diagnostics

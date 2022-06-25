@@ -18,6 +18,7 @@ sync:
 	[ -f ~/.config/nvim/lua/plugins.lua ] || ln -s $(PWD)/nvim/plugins.lua ~/.config/nvim/lua/plugins.lua
 	[ -f ~/.config/nvim/lua/statusline.lua ] || ln -s $(PWD)/nvim/statusline.lua ~/.config/nvim/lua/statusline.lua
 	[ -f ~/.gitconfig ] || ln -s $(PWD)/gitconfig ~/.gitconfig
+	[ -f ~/.ideavimrc ] || ln -s $(PWD)/ideavimrc ~/.ideavimrc
 	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmuxconf ~/.tmux.conf
 	[ -f ~/.tmux/tmux-line.conf ] || ln -s $(PWD)/tmux/tmux-line.conf ~/.tmux/tmux-line.conf
 
@@ -33,6 +34,7 @@ clean:
 	rm -f ~/.config/nvim/lua/plugins.lua
 	rm -f ~/.config/nvim/lua/statusline.lua
 	rm -f ~/.gitconfig
+	rm -f ~/.ideavimrc
 	rm -f ~/.tmux.conf
 	rm -f ~/.tmux/tmux-line.conf
 
