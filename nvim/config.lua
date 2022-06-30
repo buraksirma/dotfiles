@@ -287,6 +287,9 @@ require("formatter").setup({
 		rust = {
 			require("formatter.filetypes.rust").rustfmt,
 		},
+		fish = {
+			require("formatter.filetypes.fish").fishindent,
+		},
 	},
 })
 
