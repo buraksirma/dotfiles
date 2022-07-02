@@ -104,7 +104,8 @@ local on_attach = function(_, bufnr)
 	setKey(bufnr, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
 	setKey(bufnr, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
 	setKey(bufnr, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
-	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+	-- LSP FORMATTING
+	-- vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 end
 
 -- CMP
