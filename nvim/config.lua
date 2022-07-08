@@ -237,6 +237,7 @@ require("nvim-treesitter.configs").setup({
 		"tsx",
 		"typescript",
 		"yaml",
+		"kotlin",
 	},
 })
 -- Diagnostics
