@@ -14,6 +14,7 @@ return {
 			"gopls",
 			"jsonls",
 			-- "kotlin_language_server",
+			"ruff_lsp",
 			"lua_ls",
 			"pyright",
 			"rust_analyzer",
