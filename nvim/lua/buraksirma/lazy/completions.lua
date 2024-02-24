@@ -1,10 +1,19 @@
 return {
 	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*",
+		build = "make install_jsregexp",
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			"saadparwaiz1/cmp_luasnip",
+		},
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+		end,
+	},
+	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
-			"SirVer/ultisnips",
-			"quangnguyen30192/cmp-nvim-ultisnips",
-			"honza/vim-snippets",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-path",
@@ -14,6 +23,7 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
+			local luasnip = require("luasnip")
 
 			lspkind.init({
 				symbol_map = {
@@ -38,13 +48,12 @@ return {
 							luasnip = "[LuaSnip]",
 							nvim_lua = "[Lua]",
 							latex_symbols = "[Latex]",
-							ultisnips = "[UltiSnips]",
 						},
 					}),
 				},
 				snippet = {
 					expand = function(args)
-						vim.fn["UltiSnips#Anon"](args.body)
+						require("luasnip").lsp_expand(args.body)
 					end,
 				},
 				mapping = cmp.mapping.preset.insert({
@@ -58,29 +67,29 @@ return {
 						behavior = cmp.ConfirmBehavior.Replace,
 						select = true,
 					}),
-					["<Tab>"] = function(fallback)
-						if cmp.visible() then
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						elseif cmp.visible() then
 							cmp.select_next_item()
-						elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-							vim.fn["UltiSnips#JumpForwards"]()
 						else
 							fallback()
 						end
-					end,
-					["<S-Tab>"] = function(fallback)
-						if cmp.visible() then
+					end, { "i", "s" }),
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						elseif cmp.visible() then
 							cmp.select_prev_item()
-						elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-							vim.fn["UltiSnips#JumpBackwards"]()
 						else
 							fallback()
 						end
-					end,
+					end, { "i", "s" }),
 				}),
 				sources = {
 					{ name = "copilot" },
 					{ name = "nvim_lsp" },
-					{ name = "ultisnips" },
+					{ name = "luasnip" },
 				},
 			})
 		end,

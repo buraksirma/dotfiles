@@ -55,7 +55,7 @@ return {
 						require("formatter.filetypes.terraform").terraformfmt(),
 					},
 					python = {
-						require("formatter.filetypes.python").yapf,
+						require("formatter.filetypes.python").ruff,
 					},
 					toml = {
 						require("formatter.filetypes.toml").taplo,
@@ -67,12 +67,12 @@ return {
 			})
 
 			local augroup = vim.api.nvim_create_augroup
-			local FormaterGroup = augroup("Formatter", {})
+			local FormatterGroup = augroup("Formatter", {})
 
 			local autocmd = vim.api.nvim_create_autocmd
 
 			autocmd({ "BufWritePost" }, {
-				group = FormaterGroup,
+				group = FormatterGroup,
 				pattern = "*",
 				command = [[FormatWrite]],
 			})
