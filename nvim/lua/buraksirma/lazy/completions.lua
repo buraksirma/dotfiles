@@ -18,21 +18,11 @@ return {
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-path",
 			"onsails/lspkind-nvim",
-			"zbirenbaum/copilot-cmp",
 		},
 		config = function()
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
 			local luasnip = require("luasnip")
-
-			lspkind.init({
-				symbol_map = {
-					Copilot = "",
-				},
-			})
-			vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
-
-			require("copilot_cmp").setup()
 
 			cmp.setup({
 				window = {
@@ -87,27 +77,9 @@ return {
 					end, { "i", "s" }),
 				}),
 				sources = {
-					{ name = "copilot" },
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 				},
-			})
-		end,
-	},
-	{
-		"zbirenbaum/copilot.lua",
-		dependencies = {
-			"zbirenbaum/copilot-cmp",
-			"CopilotC-Nvim/CopilotChat.nvim",
-		},
-		config = function()
-			require("copilot").setup({
-				suggestion = { enabled = false },
-				panel = { enabled = true },
-			})
-
-			require("CopilotChat").setup({
-				debug = true,
 			})
 		end,
 	},
