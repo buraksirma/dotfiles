@@ -38,6 +38,7 @@ for i = 1, 9 do
 	map(tostring(i), { "LEADER", "SUPER" }, act.ActivateTab(i - 1))
 end
 map("0", { "LEADER", "SUPER" }, act.ActivateTab(-1))
+map("f", "LEADER", act.ActivateLastTab)
 -- 'hjkl' to move between panes
 map("h", { "LEADER", "SUPER" }, act.ActivatePaneDirection("Left"))
 map("j", { "LEADER", "SUPER" }, act.ActivatePaneDirection("Down"))
