@@ -22,12 +22,6 @@ return {
 					typescriptreact = {
 						require("formatter.filetypes.typescriptreact").prettierd,
 					},
-					go = {
-						function()
-							vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-						end,
-						require("formatter.filetypes.go").gofumpt,
-					},
 					json = {
 						require("formatter.filetypes.json").prettierd,
 					},
@@ -67,9 +61,30 @@ return {
 			})
 
 			local augroup = vim.api.nvim_create_augroup
+			local autocmd = vim.api.nvim_create_autocmd
+
 			local FormatterGroup = augroup("Formatter", {})
 
-			local autocmd = vim.api.nvim_create_autocmd
+			autocmd("BufWritePre", {
+				group = FormatterGroup,
+				pattern = "*.go",
+				callback = function()
+					local params = vim.lsp.util.make_range_params()
+					params.context = { only = { "source.organizeImports" } }
+					local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 2000)
+					for _, res in pairs(result or {}) do
+						for _, r in pairs(res.result or {}) do
+							if r.edit then
+								vim.lsp.util.apply_workspace_edit(r.edit, "utf-16")
+							else
+								vim.lsp.buf.execute_command(r.command)
+							end
+						end
+					end
+
+					vim.lsp.buf.format()
+				end,
+			})
 
 			autocmd({ "BufWritePost" }, {
 				group = FormatterGroup,

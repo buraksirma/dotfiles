@@ -98,11 +98,16 @@ return {
 		"zbirenbaum/copilot.lua",
 		dependencies = {
 			"zbirenbaum/copilot-cmp",
+			"CopilotC-Nvim/CopilotChat.nvim",
 		},
 		config = function()
 			require("copilot").setup({
 				suggestion = { enabled = false },
 				panel = { enabled = true },
+			})
+
+			require("CopilotChat").setup({
+				debug = true,
 			})
 		end,
 	},

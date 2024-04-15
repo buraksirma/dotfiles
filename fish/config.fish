@@ -22,7 +22,7 @@ alias ll="eza -lhg"
 alias awslocal="aws --endpoint-url=http://localhost:4566 "
 
 # brew install starship, https://github.com/starship/starship
-starship init fish | source
+status --is-interactive; and starship init fish | source
 
 # brew install fnm, https://github.com/Schniz/fnm
 fnm env --use-on-cd | source
@@ -30,8 +30,12 @@ fnm env --use-on-cd | source
 # brew install jump, https://github.com/gsamokovarov/jump
 status --is-interactive; and source (jump shell fish | psub)
 
+# Enable AWS CLI autocompletion: github.com/aws/aws-cli/issues/1079
+status --is-interactive; and complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
+
+
 # brew install direnv. https://github.com/direnv/direnv
-status --is-interactive; and source (direnv hook fish | psub)
+source (direnv hook fish | psub)
 
 # work related stuff
 source ~/projects/privatedotfiles/fish/config.fish

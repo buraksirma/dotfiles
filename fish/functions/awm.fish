@@ -7,6 +7,8 @@ function awm -d "Switches aws profile and opens sso login if necessary"
         end
     end
 
+    set -eg AWS_PROFILE
+    set -eg AWS_REGION
     set -Ux AWS_PROFILE (aws configure list-profiles | fzf --ansi --no-preview || return 1)
     sso_login_check $AWS_PROFILE
     set -Ux AWS_REGION (aws configure get region)
