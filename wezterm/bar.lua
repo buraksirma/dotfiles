@@ -192,6 +192,7 @@ local roman_numerals = {
 }
 
 -- custom tab bar
+---@diagnostic disable-next-line: unused-local
 wezterm.on("format-tab-title", function(tab, tabs, _panes, conf, _hover, _max_width)
 	local colours = conf.resolved_palette.tab_bar
 
@@ -212,13 +213,13 @@ wezterm.on("format-tab-title", function(tab, tabs, _panes, conf, _hover, _max_wi
 		conf.resolved_palette.ansi[6],
 	}
 
-	local i = tab.tab_index % 6
+	local i = tab.tab_index % #rainbow
 	local active_bg = rainbow[i + 1]
 	local active_fg = colours.background
 	local inactive_bg = colours.inactive_tab.bg_color
 	local inactive_fg = colours.inactive_tab.fg_color
 	local new_tab_bg = colours.new_tab.bg_color
-	local blue = conf.resolved_palette.ansi[5]
+	local pick_color = rainbow[(i + 1) % #rainbow + 1]
 
 	local s_bg, s_fg, e_bg, e_fg, i_bg, i_fg
 
@@ -242,21 +243,21 @@ wezterm.on("format-tab-title", function(tab, tabs, _panes, conf, _hover, _max_wi
 	elseif tab.tab_index == active_tab_index - 1 then
 		s_bg = inactive_bg
 		s_fg = inactive_fg
-		e_bg = rainbow[(i + 1) % 6 + 1]
+		e_bg = pick_color
 		e_fg = inactive_bg
 		i_bg = active_bg
 		i_fg = inactive_bg
 	elseif tab.is_active then
 		s_bg = active_bg
 		s_fg = active_fg
-		e_bg = rainbow[(i + 1) % 6 + 1]
+		e_bg = pick_color
 		e_fg = active_bg
 		i_bg = active_bg
 		i_fg = conf.resolved_palette.ansi[1]
 	else
 		s_bg = inactive_bg
 		s_fg = inactive_fg
-		e_bg = rainbow[(i + 1) % 6 + 1]
+		e_bg = pick_color
 		e_fg = inactive_bg
 		i_bg = active_bg
 		i_fg = inactive_bg

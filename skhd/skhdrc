@@ -133,5 +133,6 @@ ctrl + alt - s : yabai -m space --layout $(yabai -m query --spaces --space | jq 
 # destroy desktop
 cmd + alt - w : yabai -m space --focus prev && yabai -m space recent --destroy
 
-cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~ &> /dev/null
+# cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~ &> /dev/null
+cmd - return : /Applications/WezTerm.app/Contents/MacOS/wezterm &> /dev/null
 cmd + shift - return : osascript -e 'tell application "Safari" to make new document'
