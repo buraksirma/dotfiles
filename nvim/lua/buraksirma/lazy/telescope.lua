@@ -54,7 +54,7 @@ return {
 		vim.keymap.set("n", "<C-p>", builtin.find_files, { noremap = true })
 		vim.keymap.set("v", "<C-p>", function()
 			local text = getVisualSelection()
-			builtin.live_grep({ default_text = text })
+			builtin.find_files({ default_text = text })
 		end, { noremap = true })
 
 		vim.keymap.set("n", "<C-g>", builtin.live_grep, { noremap = true })

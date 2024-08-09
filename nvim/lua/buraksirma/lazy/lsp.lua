@@ -25,6 +25,7 @@ return {
 			"html",
 			"tailwindcss",
 			"yamlls",
+			"zls",
 		}
 
 		local custom_lsp_confs = {

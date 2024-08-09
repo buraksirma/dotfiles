@@ -9,20 +9,23 @@ end
 
 local custom = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 custom.background = "#050508"
-
 -- Overriden by plugin
 -- custom.tab_bar.inactive_tab_hover.bg_color = "#050508"
 -- custom.tab_bar.active_tab.fg_color = "#050508"
 custom.tab_bar.background = "rgba(5,5,8,0.6)"
 custom.cursor_fg = "#050508"
-config.color_schemes = { ["Darkppuccin"] = custom }
+
+config.color_schemes = {
+	["Darkppuccin"] = custom,
+}
 config.color_scheme = "Darkppuccin"
 
 config.font = wezterm.font({
-	family = "JetBrainsMonoNL Nerd Font Mono",
+	family = "BerkeleyMono Nerd Font Mono",
 	weight = "Bold",
 })
 config.use_fancy_tab_bar = false
+config.front_end = "WebGpu"
 config.enable_tab_bar = true
 config.font_size = 16.0
 config.window_background_opacity = 0.6

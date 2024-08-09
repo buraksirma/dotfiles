@@ -36,37 +36,6 @@ autocmd("CursorHold", {
 	command = [[Lspsaga show_cursor_diagnostics ++unfocus]],
 })
 
-autocmd("FileType", {
-	group = BurakSirmaGroup,
-	pattern = {
-		"go",
-		"html",
-		"markdown",
-		"text",
-		"fish",
-		"lua",
-	},
-	callback = function()
-		vim.opt_local.expandtab = false
-		vim.opt_local.shiftwidth = 4
-		vim.opt_local.tabstop = 4
-	end,
-})
-
-autocmd("FileType", {
-	group = BurakSirmaGroup,
-	pattern = {
-		"kotlin",
-		"python",
-		"sql",
-	},
-	callback = function()
-		vim.opt_local.expandtab = true
-		vim.opt_local.shiftwidth = 4
-		vim.opt_local.tabstop = 4
-	end,
-})
-
 vim.diagnostic.config({
 	virtual_text = { prefix = "●" },
 	update_in_insert = false,

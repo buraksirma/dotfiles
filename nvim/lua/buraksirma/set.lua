@@ -5,6 +5,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 vim.opt.number = true -- Show line numbers
+vim.opt.relativenumber = true
 vim.opt.showmatch = false -- NoHighlight matching parenthesis
 vim.opt.splitright = true -- Split windows right to the current windows
 vim.opt.splitbelow = true -- Split windows below to the current windows

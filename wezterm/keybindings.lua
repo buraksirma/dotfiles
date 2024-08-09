@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local balance = require("balance")
 local act = wezterm.action
 
 local shortcuts = {}
@@ -29,10 +30,13 @@ local openUrl = act.QuickSelectArgs({
 	end),
 })
 
--- use 'Backslash' to split horizontally
+-- use 'v' to split horizontally
 map("v", "LEADER", act.SplitHorizontal({ domain = "CurrentPaneDomain" }))
--- and 'Minus' to split vertically
+-- and 's' to split vertically
 map("s", "LEADER", act.SplitVertical({ domain = "CurrentPaneDomain" }))
+-- balance panes
+map("=", "LEADER", wezterm.action_callback(balance.balance_panes("x")))
+map("|", "LEADER", wezterm.action_callback(balance.balance_panes("y")))
 -- map 1-9 to switch to tab 1-9, 0 for the last tab
 for i = 1, 9 do
 	map(tostring(i), { "LEADER", "SUPER" }, act.ActivateTab(i - 1))
@@ -53,7 +57,7 @@ map("l", "LEADER|SHIFT", act.AdjustPaneSize({ "Right", 5 }))
 map("c", "LEADER", act.SpawnTab("CurrentPaneDomain"))
 map("x", "LEADER", act.CloseCurrentPane({ confirm = true }))
 map("t", { "SHIFT|CTRL", "SUPER" }, act.SpawnTab("CurrentPaneDomain"))
-map("w", { "SHIFT|CTRL", "SUPER" }, act.CloseCurrentTab({ confirm = true }))
+map("w", { "SHIFT|CTRL", "LEADER" }, act.CloseCurrentTab({ confirm = false }))
 map("n", { "SHIFT|CTRL", "SUPER" }, act.SpawnWindow)
 -- zoom states
 map("z", { "LEADER", "SUPER" }, act.TogglePaneZoomState)
@@ -91,62 +95,8 @@ map(
 	})
 )
 
-local key_tables = {
-	copy_mode = {
-		{ key = "q", action = act({ CopyMode = "Close" }) },
-		{ key = "h", action = act({ CopyMode = "MoveLeft" }) },
-		{ key = "j", action = act({ CopyMode = "MoveDown" }) },
-		{ key = "k", action = act({ CopyMode = "MoveUp" }) },
-		{ key = "l", action = act({ CopyMode = "MoveRight" }) },
-		{ key = "u", action = act({ CopyMode = "MoveToScrollbackTop" }) },
-		{ key = "d", action = act({ CopyMode = "MoveToScrollbackBottom" }) },
-
-		{ key = "v", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Cell" }) },
-		{
-			key = "y",
-			action = act.Multiple({
-				act.CopyTo("PrimarySelection"),
-				act.ClearSelection,
-				-- clear the selection mode, but remain in copy mode
-				act({ CopyMode = "ClearSelectionMode" }),
-			}),
-		},
-		-- Enter search mode to edit the pattern.
-		-- When the search pattern is an empty string the existing pattern is preserved
-		{ key = "/", mods = "NONE", action = act({ Search = { CaseSensitiveString = "" } }) },
-		-- navigate any search mode results
-		{ key = "n", mods = "NONE", action = act({ CopyMode = "NextMatch" }) },
-		{ key = "N", mods = "SHIFT", action = act({ CopyMode = "PriorMatch" }) },
-	},
-	search_mode = {
-		{ key = "Escape", mods = "NONE", action = act({ CopyMode = "ClearPattern" }) },
-		-- Go back to copy mode when pressing enter, so that we can use unmodified keys like "n"
-		-- to navigate search results without conflicting with typing into the search area.
-		{ key = "Enter", mods = "NONE", action = "ActivateCopyMode" },
-	},
-	resize_mode = {
-		{ key = "h", action = act.AdjustPaneSize({ "Left", 1 }) },
-		{ key = "j", action = act.AdjustPaneSize({ "Down", 1 }) },
-		{ key = "k", action = act.AdjustPaneSize({ "Up", 1 }) },
-		{ key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
-		{ key = "LeftArrow", action = act.AdjustPaneSize({ "Left", 1 }) },
-		{ key = "DownArrow", action = act.AdjustPaneSize({ "Down", 1 }) },
-		{ key = "UpArrow", action = act.AdjustPaneSize({ "Up", 1 }) },
-		{ key = "RightArrow", action = act.AdjustPaneSize({ "Right", 1 }) },
-		{ key = "Escape", action = "PopKeyTable" },
-	},
-}
-
--- add a common escape sequence to all key tables
-for k, _ in pairs(key_tables) do
-	-- 	table.insert(key_tables[k], { key = "Escape", action = "PopKeyTable" })
-	-- 	table.insert(key_tables[k], { key = "Enter", action = "PopKeyTable" })
-	table.insert(key_tables[k], { key = "c", mods = "CTRL", action = "PopKeyTable" })
-end
-
 return {
 	leader = { key = "f", mods = "CTRL", timeout_milliseconds = 5000 },
 	keys = shortcuts,
 	disable_default_key_bindings = true,
-	key_tables = key_tables,
 }

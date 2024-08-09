@@ -24,11 +24,11 @@ return {
 		dashboard.section.buttons.val = {
 			button("e", "  New File", ":ene <BAR> startinsert <CR>"),
 			button("f", "  Find File", ":Telescope find_files<CR>"),
-			button("w", "  Find Word", ":Telescope live_grep<CR>"),
-			button("r", "  Recents", ":Telescope oldfiles<CR>"),
-			button("u", "  Update Plugins", ":PackerUpdate<CR>"),
+			button("w", "󰈭  Find Word", ":Telescope live_grep<CR>"),
+			button("r", "󰧮  Recents", ":Telescope oldfiles<CR>"),
+			button("u", "  Update Plugins", ":Lazy update<CR>"),
 			button("s", "  Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
-			button("q", "  Exit", ":qa<CR>"),
+			button("q", "󰅗  Exit", ":qa<CR>"),
 		}
 
 		dashboard.section.header.val = {
