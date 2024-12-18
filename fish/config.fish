@@ -35,7 +35,7 @@ function awslocal
 end
 
 # brew install fzf, https://github.com/junegunn/fzf
-status --is-interactive; and fzf --fish | source
+# status --is-interactive; and fzf --fish | source
 
 # brew install starship, https://github.com/starship/starship
 status --is-interactive; and starship init fish | source
