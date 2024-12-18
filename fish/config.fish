@@ -1,6 +1,7 @@
 fish_add_path -a /opt/homebrew/bin
 fish_add_path -a /opt/homebrew/sbin
 fish_add_path -a $HOME/.cargo/bin
+fish_add_path -a $HOME/go/bin
 
 set fish_greeting ""
 
@@ -8,11 +9,14 @@ set -gx GOBIN $HOME/go/bin
 set -gx EDITOR nvim
 set -gx BAT_THEME Catppuccin-mocha
 set -gx fzf_fd_opts --hidden --exclude=.git
+test (uname) = Linux; and set -gx BROWSER firefox-nightly
 
 set -gx FZF_DEFAULT_OPTS "\
 --color=bg+:#313244,bg:-1,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--multi"
 
 function vim
     nvim $argv
@@ -43,7 +47,9 @@ status --is-interactive; and zoxide init fish --cmd j | source
 status --is-interactive; and complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
 
 # work related stuff
-source ~/projects/privatedotfiles/fish/config.fish
+# source ~/projects/privatedotfiles/fish/config.fish
 
 # Run this once to set theme variables as universal
 # fish_config theme save "Catppuccin Mocha"
+
+mise activate fish | source

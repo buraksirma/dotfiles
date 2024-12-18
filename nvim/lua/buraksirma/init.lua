@@ -14,11 +14,12 @@ autocmd("LspAttach", {
 		local opts = { buffer = e.buf, noremap = true, silent = true }
 		local set = vim.keymap.set
 
-		set("n", "gD", '<cmd>lua require "telescope.builtin".lsp_type_definitions()<CR>', opts)
-		set("n", "gd", '<cmd>lua require "telescope.builtin".lsp_definitions()<CR>', opts)
-		set("n", "gi", '<cmd>lua require "telescope.builtin".lsp_implementations()<CR>', opts)
-		set("n", "gr", '<cmd>lua require "telescope.builtin".lsp_references()<CR>', opts)
-		set("n", "ge", '<cmd>lua require "telescope.builtin".diagnostics()<CR>', opts)
+		set("n", "gt", '<cmd>lua require "fzf-lua".lsp_typedefs()<CR>', opts)
+		set("n", "gD", '<cmd>lua require "fzf-lua".lsp_declarations()<CR>', opts)
+		set("n", "gd", '<cmd>lua require "fzf-lua".lsp_definitions()<CR>', opts)
+		set("n", "gi", '<cmd>lua require "fzf-lua".lsp_implementations()<CR>', opts)
+		set("n", "gr", '<cmd>lua require "fzf-lua".lsp_references()<CR>', opts)
+		set("n", "ge", '<cmd>lua require "fzf-lua".diagnostics_workspace()<CR>', opts)
 
 		set("n", "<leader>rn", "<cmd>Lspsaga rename<cr>", opts)
 		set("n", "gx", "<cmd>Lspsaga code_action<cr>", opts)

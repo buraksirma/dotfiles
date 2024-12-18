@@ -16,7 +16,7 @@ function M.cmd(args)
 
 	local folder = PlanConfig.paths[time]
 
-	require("telescope.builtin").find_files({ search_dirs = { folder } })
+	require("fzf-lua").files({ search_dirs = { folder } })
 end
 
 function M.complete(arglead, cmdline)

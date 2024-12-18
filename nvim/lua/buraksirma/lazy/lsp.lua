@@ -1,29 +1,27 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
+		"saghen/blink.cmp",
 		"nvimdev/lspsaga.nvim",
 	},
 	config = function()
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 		local nvim_lsp = require("lspconfig")
 		local servers = {
 			"cssls",
-			"dartls",
 			"gopls",
 			"jsonls",
 			-- "kotlin_language_server",
-			"ruff_lsp",
+			"ruff",
 			"lua_ls",
 			"pyright",
 			"rust_analyzer",
 			"svelte",
 			"taplo",
 			"terraformls",
-			"tsserver",
+			"ts_ls",
 			"html",
-			"tailwindcss",
 			"yamlls",
 			"zls",
 		}
@@ -93,7 +91,7 @@ return {
 					},
 				}
 			end,
-			tsserver = function(lsp_settings)
+			ts_ls = function(lsp_settings)
 				lsp_settings["init_options"] = {
 					preferences = {
 						disableSuggestions = true,
