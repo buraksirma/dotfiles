@@ -52,4 +52,4 @@ status --is-interactive; and complete --command aws --no-files --arguments '(beg
 # Run this once to set theme variables as universal
 # fish_config theme save "Catppuccin Mocha"
 
-mise activate fish | source
+test (uname) = Linux; and mise activate fish | source
