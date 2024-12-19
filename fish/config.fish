@@ -9,7 +9,6 @@ set -gx GOBIN $HOME/go/bin
 set -gx EDITOR nvim
 set -gx BAT_THEME Catppuccin-mocha
 set -gx fzf_fd_opts --hidden --exclude=.git
-test (uname) = Linux; and set -gx BROWSER firefox-nightly
 
 set -gx FZF_DEFAULT_OPTS "\
 --color=bg+:#313244,bg:-1,spinner:#f5e0dc,hl:#f38ba8 \
