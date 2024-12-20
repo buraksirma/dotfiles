@@ -1,7 +1,10 @@
 return {
 	{
 		"saghen/blink.cmp",
-		dependencies = "rafamadriz/friendly-snippets",
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			"folke/lazydev.nvim",
+		},
 		version = "v0.*",
 		opts = {
 			-- 'default' for mappings similar to built-in completion
@@ -13,11 +16,19 @@ return {
 				nerd_font_variant = "mono",
 			},
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
+				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
 			},
 			completion = {
 				menu = {
 					border = "single",
+				},
+			},
+			providers = {
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					-- make lazydev completions top priority (see `:h blink.cmp`)
+					score_offset = 100,
 				},
 			},
 		},

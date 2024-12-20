@@ -1,95 +1,54 @@
 return {
 	{
-		"mhartington/formatter.nvim",
+		"stevearc/conform.nvim",
 		config = function()
-			require("formatter").setup({
-				filetype = {
-					lua = {
-						require("formatter.filetypes.lua").stylua,
-					},
-					markdown = {
-						require("formatter.defaults.prettierd"),
-					},
-					javascript = {
-						require("formatter.filetypes.javascript").prettierd,
-					},
-					javascriptreact = {
-						require("formatter.filetypes.javascriptreact").prettierd,
-					},
-					typescript = {
-						require("formatter.filetypes.typescript").prettierd,
-					},
-					typescriptreact = {
-						require("formatter.filetypes.typescriptreact").prettierd,
-					},
-					json = {
-						require("formatter.filetypes.json").prettierd,
-					},
-					html = {
-						require("formatter.filetypes.html").prettierd,
-					},
-					css = {
-						require("formatter.filetypes.css").prettierd,
-					},
-					rust = {
-						require("formatter.filetypes.rust").rustfmt,
-					},
-					fish = {
-						require("formatter.filetypes.fish").fishindent,
-					},
-					dart = {
-						require("formatter.filetypes.dart").dartformat({
-							line_length = 120,
-						}),
-					},
-					yaml = {
-						require("formatter.filetypes.yaml").prettierd,
-					},
-					terraform = {
-						require("formatter.filetypes.terraform").terraformfmt(),
-					},
-					python = {
-						require("formatter.filetypes.python").ruff,
-					},
-					toml = {
-						require("formatter.filetypes.toml").taplo,
-					},
-					svelte = {
-						require("formatter.filetypes.svelte").prettier,
-					},
+			require("conform").setup({
+				formatters_by_ft = {
+					lua = { "stylua" },
+					markdown = { "prettierd" },
+					javascript = { "prettierd" },
+					javascriptreact = { "prettierd" },
+					typescript = { "prettierd" },
+					typescriptreact = { "prettierd" },
+					json = { "prettierd" },
+					html = { "prettierd" },
+					css = { "prettierd" },
+					rust = { "rustfmt" },
+					go = { "goimports" },
+					fish = { "fish_indent" },
+					dart = { "dart_format" },
+					yaml = { "prettierd" },
+					terraform = { "terraform_fmt" },
+					python = { "ruff_format" },
+					toml = { "taplo" },
+					svelte = { "prettierd" },
+					zig = { "zifgmt" },
 				},
-			})
-
-			local augroup = vim.api.nvim_create_augroup
-			local autocmd = vim.api.nvim_create_autocmd
-
-			local FormatterGroup = augroup("Formatter", {})
-
-			autocmd("BufWritePre", {
-				group = FormatterGroup,
-				pattern = "*.go",
-				callback = function()
-					local params = vim.lsp.util.make_range_params()
-					params.context = { only = { "source.organizeImports" } }
-					local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 2000)
-					for _, res in pairs(result or {}) do
-						for _, r in pairs(res.result or {}) do
-							if r.edit then
-								vim.lsp.util.apply_workspace_edit(r.edit, "utf-16")
-							else
-								vim.lsp.buf.execute_command(r.command)
-							end
-						end
+				format_on_save = function(bufnr)
+					-- Disable with a global or buffer-local variable
+					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+						return
 					end
-
-					vim.lsp.buf.format()
+					return { timeout_ms = 500, lsp_format = "fallback" }
 				end,
 			})
 
-			autocmd({ "BufWritePost" }, {
-				group = FormatterGroup,
-				pattern = "*",
-				command = [[FormatWrite]],
+			vim.api.nvim_create_user_command("FormatDisable", function(args)
+				if args.bang then
+					-- FormatDisable! will disable formatting just for this buffer
+					vim.b.disable_autoformat = true
+				else
+					vim.g.disable_autoformat = true
+				end
+			end, {
+				desc = "Disable autoformat-on-save",
+				bang = true,
+			})
+			vim.api.nvim_create_user_command("FormatEnable", function()
+				vim.b.disable_autoformat = false
+				vim.g.disable_autoformat = false
+			end, {
+				desc = "Re-enable autoformat-on-save",
 			})
 		end,
 	},
