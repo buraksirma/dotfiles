@@ -30,10 +30,9 @@ local openUrl = act.QuickSelectArgs({
 	end),
 })
 
--- use 'v' to split horizontally
-map("v", "LEADER", act.SplitHorizontal({ domain = "CurrentPaneDomain" }))
--- and 's' to split vertically
-map("s", "LEADER", act.SplitVertical({ domain = "CurrentPaneDomain" }))
+-- split panes
+map("v", "LEADER", act.SplitPane({ direction = "Down", size = { Percent = 30 } }))
+map("s", "LEADER", act.SplitPane({ direction = "Right", size = { Percent = 30 } }))
 -- balance panes
 map("=", "LEADER", wezterm.action_callback(balance.balance_panes("x")))
 map("|", "LEADER", wezterm.action_callback(balance.balance_panes("y")))
