@@ -98,6 +98,9 @@ return {
 					},
 				}
 			end,
+			zls = function(lsp_settings)
+				lsp_settings["cmd"] = { "/home/burak/projects/github/zls/zig-out/bin/zls" }
+			end,
 		}
 
 		for _, lsp in ipairs(servers) do
