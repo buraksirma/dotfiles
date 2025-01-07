@@ -11,6 +11,6 @@
 [url "https://github.com/RustSec/advisory-db"]
   insteadOf = https://github.com/RustSec/advisory-db
 [init]
-  defaultBranch = main
+  defaultBranch = master
 [commit]
   gpgsign = true
