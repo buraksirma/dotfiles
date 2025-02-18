@@ -24,6 +24,7 @@ return {
 			"html",
 			"yamlls",
 			"zls",
+			"volar",
 		}
 
 		local custom_lsp_confs = {
@@ -92,10 +93,35 @@ return {
 				}
 			end,
 			ts_ls = function(lsp_settings)
+				local handle = io.popen("npm root -g")
+				local global_npm_path = ""
+				if handle == nil then
+					print("Can't get path for globally installed npm packages. Some lsps might not work.")
+				else
+					global_npm_path = handle:read("*a")
+					handle:close()
+				end
+				global_npm_path = string.gsub(global_npm_path, "\n", "")
 				lsp_settings["init_options"] = {
+					plugins = {
+						{
+							name = "@vue/typescript-plugin",
+							location = string.format("%s/@vue/typescript-plugin", global_npm_path),
+							languages = { "javascript", "typescript", "vue" },
+						},
+					},
 					preferences = {
 						disableSuggestions = true,
 					},
+				}
+				lsp_settings["filetypes"] = {
+					"javascript",
+					"javascriptreact",
+					"javascript.jsx",
+					"typescript",
+					"typescriptreact",
+					"typescript.tsx",
+					"vue",
 				}
 			end,
 			zls = function(lsp_settings)
