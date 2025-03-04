@@ -25,6 +25,7 @@ return {
 			"yamlls",
 			"zls",
 			"volar",
+			"eslint",
 		}
 
 		local custom_lsp_confs = {
@@ -126,6 +127,20 @@ return {
 			end,
 			zls = function(lsp_settings)
 				lsp_settings["cmd"] = { "/home/burak/projects/github/zls/zig-out/bin/zls" }
+			end,
+			eslint = function(lsp_settings)
+				---@diagnostic disable-next-line: unused-local
+				lsp_settings["on_attach"] = function(client, bufnr)
+					vim.api.nvim_create_autocmd("BufWritePre", {
+						buffer = bufnr,
+						callback = function()
+							if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+								return
+							end
+							vim.cmd("EslintFixAll")
+						end,
+					})
+				end
 			end,
 		}
 
