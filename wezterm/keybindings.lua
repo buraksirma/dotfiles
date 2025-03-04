@@ -31,8 +31,8 @@ local openUrl = act.QuickSelectArgs({
 })
 
 -- split panes
-map("v", "LEADER", act.SplitPane({ direction = "Down", size = { Percent = 30 } }))
-map("s", "LEADER", act.SplitPane({ direction = "Right", size = { Percent = 30 } }))
+map("s", "LEADER", act.SplitPane({ direction = "Down", size = { Percent = 30 } }))
+map("v", "LEADER", act.SplitPane({ direction = "Right", size = { Percent = 30 } }))
 -- balance panes
 map("=", "LEADER", wezterm.action_callback(balance.balance_panes("x")))
 map("|", "LEADER", wezterm.action_callback(balance.balance_panes("y")))
@@ -58,6 +58,9 @@ map("x", "LEADER", act.CloseCurrentPane({ confirm = true }))
 map("t", { "SHIFT|CTRL", "SUPER" }, act.SpawnTab("CurrentPaneDomain"))
 map("w", { "SHIFT|CTRL", "LEADER" }, act.CloseCurrentTab({ confirm = false }))
 map("n", { "SHIFT|CTRL", "SUPER" }, act.SpawnWindow)
+-- move tabs left or right
+map("LeftArrow", { "SHIFT|CTRL", "SUPER" }, act.MoveTabRelative(-1))
+map("RightArrow", { "SHIFT|CTRL", "SUPER" }, act.MoveTabRelative(1))
 -- zoom states
 map("z", { "LEADER", "SUPER" }, act.TogglePaneZoomState)
 map("Z", { "LEADER", "SUPER" }, toggleTabBar)
